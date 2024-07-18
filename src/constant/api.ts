@@ -8,5 +8,6 @@ export const API = {
   auth_urls: {
     accessToken: "/api/v1/access-token",
     isAuthenticated: "/api/v1/is-login",
+    getServerByProfileId: "/api/v1/servers/member",
   },
 };

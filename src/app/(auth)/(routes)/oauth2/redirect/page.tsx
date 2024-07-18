@@ -1,11 +1,11 @@
 "use client";
 import { setIsAuthenticatedApi } from "@/services/api";
-import { useAuth } from "@/store";
+import { useAuthStore } from "@/store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 const Oauth2Redirect = () => {
   const router = useRouter();
-  const { setIsAuthenticated, setUserId } = useAuth();
+  const { setIsAuthenticated, setUserId } = useAuthStore();
   useEffect(() => {
     setIsAuthenticatedApi()
       .then((res) => {

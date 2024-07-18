@@ -1,9 +1,9 @@
 import { axiosPrivate } from "@/services/api/axiosConfig";
 import { useEffect } from "react";
-import { useAuth } from "../store/use-auth-store";
+import { useAuthStore } from "../store/use-auth-store";
 import { useAccessToken } from "./use-access-token";
 export const useAxiosPrivate = () => {
-  const { accessToken } = useAuth();
+  const { accessToken } = useAuthStore();
   const { getAccessToken } = useAccessToken();
   useEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
