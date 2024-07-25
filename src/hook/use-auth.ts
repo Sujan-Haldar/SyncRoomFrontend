@@ -1,12 +1,13 @@
 import { setIsAuthenticatedApi } from "@/services/api";
 import { useAuthStore } from "@/store";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useCallback } from "react";
 
 export const useAuth = () => {
   const router = useRouter();
   const { isAuthenticated, setIsAuthenticated, setUserId } = useAuthStore();
-  useEffect(() => {
+
+  const isLogin = useCallback(() => {
     if (!isAuthenticated) {
       setIsAuthenticatedApi()
         .then((res) => {
@@ -22,5 +23,6 @@ export const useAuth = () => {
           router.push("/login");
         });
     }
-  });
+  }, []);
+  return { isLogin };
 };

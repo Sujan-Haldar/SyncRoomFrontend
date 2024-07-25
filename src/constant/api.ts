@@ -9,5 +9,6 @@ export const API = {
     accessToken: "/api/v1/access-token",
     isAuthenticated: "/api/v1/is-login",
     getServerByProfileId: "/api/v1/servers/member",
+    createServer: "/api/v1/servers",
   },
 };

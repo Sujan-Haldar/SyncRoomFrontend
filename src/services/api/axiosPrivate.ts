@@ -1,5 +1,6 @@
 import { API } from "@/constant";
 import { useAxiosPrivate } from "@/hook";
+import { useCallback } from "react";
 const defaultHeader = {
   "Content-type": "application/json",
 };
@@ -12,5 +13,13 @@ export const useAxiosPrivateApis = () => {
       headers: defaultHeader,
     });
   };
-  return { getServerByProfileId };
+  const createServer = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.createServer,
+      method: "POST",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
+  return { getServerByProfileId, createServer };
 };
