@@ -9,7 +9,7 @@ interface AuthStore {
   setUserId: (id: string) => void;
 }
 
-export const useAuth = create<AuthStore>((set) => ({
+export const useAuthStore = create<AuthStore>((set) => ({
   isAuthenticated: false,
   setAccessToken: (accessToken: string) => set({ accessToken }),
   setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),

@@ -1,8 +1,8 @@
 import { getAccessTokenApi } from "@/services/api";
-import { useAuth } from "../store/use-auth-store";
+import { useAuthStore } from "../store/use-auth-store";
 
 export const useAccessToken = () => {
-  const { setAccessToken, setIsAuthenticated } = useAuth();
+  const { setAccessToken, setIsAuthenticated } = useAuthStore();
   const getAccessToken = async () => {
     try {
       const res = await getAccessTokenApi();

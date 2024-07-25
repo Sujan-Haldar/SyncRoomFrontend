@@ -1,3 +1,4 @@
+export * from "@/services/api/axiosPrivate";
 import { API } from "@/constant";
 import { createAxiosInstance } from "./axiosConfig";
 const defaultHeader = {
