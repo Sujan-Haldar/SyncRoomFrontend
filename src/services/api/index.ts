@@ -7,7 +7,7 @@ const defaultHeader = {
 export const getAccessTokenApi = () => {
   return createAxiosInstance({
     url: API.auth_urls.accessToken,
-    method: "POST",
+    method: "GET",
     headers: defaultHeader,
   });
 };

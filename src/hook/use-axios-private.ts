@@ -1,11 +1,11 @@
 import { axiosPrivate } from "@/services/api/axiosConfig";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useAuthStore } from "../store/use-auth-store";
 import { useAccessToken } from "./use-access-token";
 export const useAxiosPrivate = () => {
   const { accessToken } = useAuthStore();
   const { getAccessToken } = useAccessToken();
-  useEffect(() => {
+  useLayoutEffect(() => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       (config) => {
         if (!config.headers["Authorization"]) {

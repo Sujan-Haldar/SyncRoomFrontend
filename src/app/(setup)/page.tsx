@@ -6,13 +6,13 @@ import { useAxiosPrivateApis } from "@/services/api";
 import { useAuthStore } from "@/store";
 import { useRouter } from "next/navigation";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 const SetupPage = () => {
   const { getServerByProfileId } = useAxiosPrivateApis();
   const { id } = useAuthStore();
   const router = useRouter();
-  useEffect(() => {
+  useLayoutEffect(() => {
     try {
       const getServer = async () => {
         const server = await getServerByProfileId(id as string);
