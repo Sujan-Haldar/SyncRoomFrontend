@@ -15,7 +15,7 @@ export interface ChannelInterface {
 
 export interface MemberInterface {
   id: string;
-  user: { id: string };
+  user: UserInterface;
   role: string;
 }
 export interface UserInterface {

@@ -4,7 +4,11 @@ import {
 } from "@/services/interface";
 import { create } from "zustand";
 
-export type ModalType = "createServer" | "invite";
+export type ModalType =
+  | "createServer"
+  | "invite"
+  | "editServer"
+  | "manageMember";
 
 interface ModalData {
   server?: ServerInterface | ServerInterfaceForServerSidebar;

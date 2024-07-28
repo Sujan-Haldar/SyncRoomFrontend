@@ -1,4 +1,5 @@
 "use client";
+import { FileUpload } from "@/components/file-upload";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,15 +18,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useAxiosPrivateApis } from "@/services/api";
+import {
+  useAllServersStore,
+  useAuthStore,
+  useModalStore,
+  useServerStore,
+} from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useLayoutEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-
-import { FileUpload } from "@/components/file-upload";
-import { useAxiosPrivateApis } from "@/services/api";
-import { useAllServersStore, useAuthStore, useModalStore } from "@/store";
-import { useRouter } from "next/navigation";
-import { v4 as uuidv4 } from "uuid";
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Server name is required",
@@ -34,13 +38,14 @@ const formSchema = z.object({
     message: "Server image is required",
   }),
 });
-export const CreateServerModal = () => {
-  const { createServer } = useAxiosPrivateApis();
+export const EditServerModal = () => {
+  const { updateServerBasicDetailsApi } = useAxiosPrivateApis();
   const { id } = useAuthStore();
   const { isOpen, type, onClose } = useModalStore();
-  const { addServer } = useAllServersStore();
-  const isModalOPen = isOpen && type === "createServer";
-  const router = useRouter();
+  const isModalOPen = isOpen && type === "editServer";
+  const { server, updateImageUrl, updateName } = useServerStore();
+  const { updateServer } = useAllServersStore();
+  const { push } = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -48,29 +53,38 @@ export const CreateServerModal = () => {
       imageUrl: "",
     },
   });
-
+  useLayoutEffect(() => {
+    if (server) {
+      form.setValue("name", server.name);
+      form.setValue("imageUrl", server.imageUrl);
+    }
+  }, [form, server]);
+  useLayoutEffect(() => {
+    if (server && !isModalOPen) {
+      form.setValue("name", server.name);
+      form.setValue("imageUrl", server.imageUrl);
+    }
+  }, [form, isModalOPen, server]);
   const isLoading = form.formState.isSubmitting;
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
     try {
-      createServer({
+      updateServerBasicDetailsApi({
+        serverId: server?.id,
+        userId: id,
         ...values,
-        userID: id,
-        inviteCode: uuidv4(),
       }).then((res) => {
-        form.reset();
         if (res?.data?.data) {
-          addServer(res?.data?.data);
+          updateServer(res?.data?.data);
+          updateImageUrl(res?.data?.data?.imageUrl);
+          updateName(res?.data?.data?.name);
+          onClose();
         }
-        router.refresh();
-        onClose();
       });
     } catch (error) {
       console.log(error);
     }
   };
   const handleClose: any = () => {
-    form.reset();
     onClose();
   };
   return (
@@ -128,7 +142,7 @@ export const CreateServerModal = () => {
             </div>
             <DialogFooter className="bg-grey-100 px-6 py-4">
               <Button disabled={isLoading} variant={"primary"}>
-                Create
+                Save
               </Button>
             </DialogFooter>
           </form>

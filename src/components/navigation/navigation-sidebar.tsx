@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
 import { ServerInterface } from "@/services/interface";
-import { useAuthStore } from "@/store";
+import { useAllServersStore, useAuthStore } from "@/store";
 import { useLayoutEffect, useState } from "react";
 import { NavigationAction } from "./navigation-action";
 import { NavigationItem } from "./navigation-item";
@@ -13,7 +13,7 @@ import { NavigationItem } from "./navigation-item";
 export const MyNavigationSidebar = () => {
   const { id } = useAuthStore();
   const { getMultipleServerByUserId } = useAxiosPrivateApis();
-  const [servers, setServers] = useState<Array<ServerInterface>>([]);
+  const { servers, setServers } = useAllServersStore();
   useLayoutEffect(() => {
     try {
       id &&

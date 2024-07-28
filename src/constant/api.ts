@@ -11,8 +11,8 @@ export const API = {
     getServerByProfileId: "/api/v1/servers/member",
     getMultipleServerByUserId: "/api/v1/servers/user",
     getServerByUserIdandServerId: "/api/v1/servers/server-and-userid",
-    createServer: "/api/v1/servers",
-    updateServerInviteCode: "/api/v1/servers/invite-code",
+    server: "/api/v1/servers",
     serverInvite: "/api/v1/servers/invite",
+    member: "/api/v1/member",
   },
 };
