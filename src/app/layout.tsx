@@ -1,3 +1,5 @@
+import { ModalProvider, ThemeProvider } from "@/components";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
@@ -16,7 +18,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>{children}</body>
+      <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem={false}
+          storageKey="discord-theme"
+        >
+          <ModalProvider />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
