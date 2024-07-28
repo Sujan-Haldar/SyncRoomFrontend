@@ -13,17 +13,16 @@ const SetupPage = () => {
   const { id } = useAuthStore();
   const router = useRouter();
   useLayoutEffect(() => {
-    try {
-      const getServer = async () => {
-        const server = await getServerByProfileId(id as string);
-        if (server?.data && server?.data?.data) {
-          return router.push(`/servers/${server.data.data.id}`);
-        }
-      };
-      id && getServer();
-    } catch (error) {
-      console.log(error);
-    }
+    id &&
+      getServerByProfileId(id)
+        .then((res) => {
+          if (res?.data && res?.data?.data) {
+            return router.push(`/servers/${res.data.data.id}`);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
   }, [id]);
   return <InitialModal />;
 };

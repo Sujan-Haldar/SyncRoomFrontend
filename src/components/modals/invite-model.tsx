@@ -20,7 +20,7 @@ export const InviteModal = () => {
   const { onOpen, isOpen, onClose, type } = useModalStore();
   const { server, updateInviteCode } = useServerStore();
   const { id } = useAuthStore();
-  const { updateServerInviteCodeApi } = useAxiosPrivateApis();
+  const { updateServerBasicDetailsApi } = useAxiosPrivateApis();
   const origin = useOrigin();
   const isModalOpen = isOpen && type === "invite";
   const [copied, setCopied] = useState(false);
@@ -38,7 +38,7 @@ export const InviteModal = () => {
   const onNew = async () => {
     try {
       setIsLoading(true);
-      const res = await updateServerInviteCodeApi({
+      const res = await updateServerBasicDetailsApi({
         serverId: server?.id,
         userId: id,
         inviteCode: uuidv4(),

@@ -7,3 +7,6 @@ export * from "@/components/providers/theme-provider";
 export * from "@/components/server/server-header";
 export * from "@/components/server/server-sidebar";
 export * from "@/components/modals/invite-model";
+export * from "@/components/modals/edit-server-modal";
+export * from "@/components/modals/manage-member-modal";
+export * from "@/components/user-avatar";

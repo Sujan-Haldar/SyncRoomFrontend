@@ -6,7 +6,6 @@ import {
   ChannelInterface,
   ChannelType,
   MemberInterface,
-  ServerInterfaceForServerSidebar,
 } from "@/services/interface";
 import { useAuthStore, useServerStore } from "@/store";
 import { useLayoutEffect, useState } from "react";
@@ -32,9 +31,13 @@ const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
     getServerByUserIdandServerIdApi({
       userId: id,
       serverId,
-    }).then((res) => {
-      if (res?.data?.data) setServer(res?.data?.data);
-    });
+    })
+      .then((res) => {
+        if (res?.data?.data) setServer(res?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [id, serverId]);
   useLayoutEffect(() => {
     if (server) {

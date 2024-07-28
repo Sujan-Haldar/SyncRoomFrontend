@@ -15,7 +15,7 @@ export const useAxiosPrivateApis = () => {
   };
   const createServer = useCallback((data: any) => {
     return createAxiosPrivateInstance({
-      url: API.auth_urls.createServer,
+      url: API.auth_urls.server,
       method: "POST",
       headers: defaultHeader,
       data: data,
@@ -36,9 +36,9 @@ export const useAxiosPrivateApis = () => {
       data: data,
     });
   }, []);
-  const updateServerInviteCodeApi = useCallback((data: any) => {
+  const updateServerBasicDetailsApi = useCallback((data: any) => {
     return createAxiosPrivateInstance({
-      url: API.auth_urls.updateServerInviteCode,
+      url: API.auth_urls.server,
       method: "PATCH",
       headers: defaultHeader,
       data: data,
@@ -52,12 +52,30 @@ export const useAxiosPrivateApis = () => {
       data: data,
     });
   }, []);
+  const updateMemberApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.member,
+      method: "PATCH",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
+  const deleteMemberApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.member,
+      method: "DELETE",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
   return {
     getServerByProfileId,
     createServer,
     getMultipleServerByUserId,
     getServerByUserIdandServerIdApi,
-    updateServerInviteCodeApi,
+    updateServerBasicDetailsApi,
     serverInviteApi,
+    updateMemberApi,
+    deleteMemberApi,
   };
 };
