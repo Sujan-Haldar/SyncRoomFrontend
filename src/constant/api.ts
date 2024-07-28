@@ -14,5 +14,7 @@ export const API = {
     server: "/api/v1/servers",
     serverInvite: "/api/v1/servers/invite",
     member: "/api/v1/member",
+    channel: "/api/v1/channel",
+    leaveServer: "/api/v1/servers/leave",
   },
 };

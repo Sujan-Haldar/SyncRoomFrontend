@@ -9,4 +9,7 @@ export * from "@/components/server/server-sidebar";
 export * from "@/components/modals/invite-model";
 export * from "@/components/modals/edit-server-modal";
 export * from "@/components/modals/manage-member-modal";
+export * from "@/components/modals/create-channel-modal";
+export * from "@/components/modals/leave-server-modal";
+export * from "@/components/modals/delete-server-modal";
 export * from "@/components/user-avatar";
