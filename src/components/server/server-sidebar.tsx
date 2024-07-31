@@ -16,7 +16,12 @@ interface ServerSidebarProps {
 const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
   const { id } = useAuthStore();
   const { getServerByUserIdandServerIdApi } = useAxiosPrivateApis();
-  const { server, setServer } = useServerStore();
+  const {
+    id: currentServerId,
+    channels,
+    members: currentServerMembers,
+    setServer,
+  } = useServerStore();
   // const [server, setServer] = useState<ServerInterfaceForServerSidebar>();
   const [textChannels, setTextChannels] = useState<Array<ChannelInterface>>([]);
   const [audioChannels, setAudioChannels] = useState<Array<ChannelInterface>>(
@@ -40,23 +45,29 @@ const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
       });
   }, [id, serverId]);
   useLayoutEffect(() => {
-    if (server) {
+    if (channels) {
       setTextChannels(
-        server.channels.filter((channel) => channel.type === ChannelType.TEXT)
+        channels.filter((channel) => channel.type === ChannelType.TEXT)
       );
       setAudioChannels(
-        server.channels.filter((channel) => channel.type === ChannelType.AUDIO)
+        channels.filter((channel) => channel.type === ChannelType.AUDIO)
       );
       setVideoChannels(
-        server.channels.filter((channel) => channel.type === ChannelType.VIDEO)
+        channels.filter((channel) => channel.type === ChannelType.VIDEO)
       );
-      setMembers(server.members.filter((member) => member.user.id !== id));
-      setRole(server.members.find((member) => member.user.id === id)?.role);
     }
-  }, [id, server]);
+    if (currentServerMembers) {
+      setMembers(
+        currentServerMembers.filter((member) => member.user.id !== id)
+      );
+      setRole(
+        currentServerMembers.find((member) => member.user.id === id)?.role
+      );
+    }
+  }, [channels, currentServerMembers, id]);
   return (
     <div className="flex flex-col h-full w-full text-primary dark:bg-[#2B2D31] bg-[#F2F3F5]">
-      {server && <ServerHeader server={server} role={role} />}
+      {currentServerId && <ServerHeader role={role} />}
     </div>
   );
 };
