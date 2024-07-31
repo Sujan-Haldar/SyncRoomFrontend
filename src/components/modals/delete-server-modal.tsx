@@ -16,24 +16,26 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 export const DeleteServerModal = () => {
   const { onOpen, isOpen, onClose, type } = useModalStore();
-  const { server, setServer } = useServerStore();
+  const { id: currentServerId, name, removeServerInfo } = useServerStore();
   const { servers, setServers } = useAllServersStore();
   const { id } = useAuthStore();
-  const { leaveServerApi } = useAxiosPrivateApis();
+  const { deleteServerApi } = useAxiosPrivateApis();
   const isModalOpen = isOpen && type === "deleteServer";
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
-  const leaveServer = () => {
-    server &&
+  const deleteServer = () => {
+    currentServerId &&
       id &&
-      leaveServerApi({
+      deleteServerApi({
         userId: id,
-        serverId: server?.id,
+        serverId: currentServerId,
       })
         .then((res) => {
-          const myServers = servers.filter((temp) => temp.id != server.id);
+          const myServers = servers.filter(
+            (temp) => temp.id != currentServerId
+          );
           setServers(myServers);
-          setServer(undefined);
+          removeServerInfo();
           if (myServers.length === 0) {
             push("/");
           } else {
@@ -55,10 +57,8 @@ export const DeleteServerModal = () => {
           <DialogDescription className="text-center text-zinc-500">
             Are you sure you want to delete?
             <br />
-            <span className="font-semibold text-indigo-500">
-              {server?.name}
-            </span>{" "}
-            will be permanently deleted.
+            <span className="font-semibold text-indigo-500">{name}</span> will
+            be permanently deleted.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="pb-4">
@@ -73,7 +73,7 @@ export const DeleteServerModal = () => {
             <Button
               disabled={isLoading}
               variant={"primary"}
-              onClick={leaveServer}
+              onClick={deleteServer}
             >
               Confirm
             </Button>

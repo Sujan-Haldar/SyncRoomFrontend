@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 export const LeaveServerModal = () => {
   const { onOpen, isOpen, onClose, type } = useModalStore();
-  const { server, setServer } = useServerStore();
+  const { id: currentServerId, name, removeServerInfo } = useServerStore();
   const { servers, setServers } = useAllServersStore();
   const { id } = useAuthStore();
   const { leaveServerApi } = useAxiosPrivateApis();
@@ -24,16 +24,18 @@ export const LeaveServerModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
   const leaveServer = () => {
-    server &&
+    currentServerId &&
       id &&
       leaveServerApi({
         userId: id,
-        serverId: server?.id,
+        serverId: currentServerId,
       })
         .then((res) => {
-          const myServers = servers.filter((temp) => temp.id != server.id);
+          const myServers = servers.filter(
+            (temp) => temp.id != currentServerId
+          );
           setServers(myServers);
-          setServer(undefined);
+          removeServerInfo();
           if (myServers.length === 0) {
             push("/");
           } else {
@@ -54,9 +56,7 @@ export const LeaveServerModal = () => {
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
             Are you sure you want to leave?
-            <span className="font-semibold text-indigo-500">
-              {server?.name}
-            </span>
+            <span className="font-semibold text-indigo-500">{name}</span>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="pb-4">

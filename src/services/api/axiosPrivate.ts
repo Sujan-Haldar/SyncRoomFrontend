@@ -84,6 +84,14 @@ export const useAxiosPrivateApis = () => {
       data: data,
     });
   }, []);
+  const deleteServerApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.server,
+      method: "DELETE",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
   return {
     getServerByProfileId,
     createServer,
@@ -95,5 +103,6 @@ export const useAxiosPrivateApis = () => {
     deleteMemberApi,
     createChannelApi,
     leaveServerApi,
+    deleteServerApi,
   };
 };

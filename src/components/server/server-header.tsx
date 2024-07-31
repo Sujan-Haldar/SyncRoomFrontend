@@ -3,7 +3,7 @@ import {
   MemberRole,
   ServerInterfaceForServerSidebar,
 } from "@/services/interface";
-import { useModalStore } from "@/store";
+import { useModalStore, useServerStore } from "@/store";
 import {
   ChevronDown,
   LogOut,
@@ -21,18 +21,18 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 interface ServerHeaderProps {
-  server: ServerInterfaceForServerSidebar;
   role?: string;
 }
-export const ServerHeader: React.FC<ServerHeaderProps> = ({ server, role }) => {
+export const ServerHeader: React.FC<ServerHeaderProps> = ({ role }) => {
   const { onOpen } = useModalStore();
+  const { name } = useServerStore();
   const isAdmin = role === MemberRole.ADMIN;
   const isModarator = isAdmin || role === MemberRole.MODERATOR;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="focus:outline-none" asChild>
         <button className="w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition">
-          {server.name}
+          {name}
           <ChevronDown className="h-5 w-5 ml-auto" />
         </button>
       </DropdownMenuTrigger>

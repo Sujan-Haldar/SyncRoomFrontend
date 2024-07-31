@@ -18,15 +18,20 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 export const InviteModal = () => {
   const { onOpen, isOpen, onClose, type } = useModalStore();
-  const { server, updateInviteCode } = useServerStore();
+  const {
+    id: currentServerId,
+    inviteCode,
+    setInviteCode,
+    user,
+  } = useServerStore();
   const { id } = useAuthStore();
   const { updateServerBasicDetailsApi } = useAxiosPrivateApis();
   const origin = useOrigin();
   const isModalOpen = isOpen && type === "invite";
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
-  const isAdmin = id === server?.user.id;
+  const inviteUrl = `${origin}/invite/${inviteCode}`;
+  const isAdmin = id === user?.id;
   const onCopy = () => {
     navigator.clipboard.writeText(inviteUrl);
     setCopied(true);
@@ -39,12 +44,12 @@ export const InviteModal = () => {
     try {
       setIsLoading(true);
       const res = await updateServerBasicDetailsApi({
-        serverId: server?.id,
+        serverId: currentServerId,
         userId: id,
         inviteCode: uuidv4(),
       });
       if (res?.data?.data) {
-        updateInviteCode(res?.data?.data?.inviteCode);
+        setInviteCode(res?.data?.data?.inviteCode);
         onOpen("invite");
       }
     } catch (error) {

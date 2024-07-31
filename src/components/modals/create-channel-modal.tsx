@@ -45,7 +45,7 @@ export const CreateChannelModal = () => {
   const { createChannelApi } = useAxiosPrivateApis();
   const { id } = useAuthStore();
   const { isOpen, type, onClose } = useModalStore();
-  const { server, addChannel } = useServerStore();
+  const { id: currentServerId, addChannel } = useServerStore();
   const isModalOPen = isOpen && type === "createChannel";
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -60,7 +60,7 @@ export const CreateChannelModal = () => {
     createChannelApi({
       ...values,
       userId: id,
-      serverId: server?.id,
+      serverId: currentServerId,
     })
       .then((res) => {
         form.reset();
