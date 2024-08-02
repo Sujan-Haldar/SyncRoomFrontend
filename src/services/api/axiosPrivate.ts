@@ -76,6 +76,21 @@ export const useAxiosPrivateApis = () => {
       data: data,
     });
   }, []);
+  const updateChannelApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.channel,
+      method: "PATCH",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
+  const deleteChannelApi = useCallback((id: string) => {
+    return createAxiosPrivateInstance({
+      url: `${API.auth_urls.channel}/${id}`,
+      method: "DELETE",
+      headers: defaultHeader,
+    });
+  }, []);
   const leaveServerApi = useCallback((data: any) => {
     return createAxiosPrivateInstance({
       url: API.auth_urls.leaveServer,
@@ -102,6 +117,8 @@ export const useAxiosPrivateApis = () => {
     updateMemberApi,
     deleteMemberApi,
     createChannelApi,
+    deleteChannelApi,
+    updateChannelApi,
     leaveServerApi,
     deleteServerApi,
   };

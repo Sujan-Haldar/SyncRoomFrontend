@@ -2,6 +2,7 @@
 
 import { ActionTooltip } from "@/components/action-tooltip";
 import { cn } from "@/lib/utils";
+import { useServerStore } from "@/store";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
@@ -14,7 +15,7 @@ interface NavigationItemProps {
 export const NavigationItem = ({ id, imageUrl, name }: NavigationItemProps) => {
   const params = useParams();
   const router = useRouter();
-
+  const { removeServerInfo } = useServerStore();
   const onClick = () => {
     router.push(`/servers/${id}`);
   };

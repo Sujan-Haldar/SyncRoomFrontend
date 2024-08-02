@@ -27,6 +27,7 @@ interface ServerStore {
   deleteMember: (id: string) => void;
   setChannels: (channels: Array<ChannelInterface>) => void;
   addChannel: (channel: ChannelInterface) => void;
+  updateChannel: (channel: ChannelInterface) => void;
   deleteChannel: (id: string) => void;
   removeServerInfo: () => void;
 }
@@ -65,6 +66,12 @@ export const useServerStore = create<ServerStore>((set) => ({
     set((state) => ({
       channels: state.channels ? [...state.channels, channel] : undefined,
     })),
+  updateChannel: (channel: ChannelInterface) =>
+    set((state) => ({
+      channels: state.channels
+        ? update_Channel(state.channels, channel)
+        : undefined,
+    })),
   deleteChannel: (id: string) =>
     set((state) => ({
       channels: state.channels
@@ -96,4 +103,15 @@ const sortMembers = (
     return fistRole.charCodeAt(0) - secondRole.charCodeAt(0);
   });
   return members;
+};
+
+const update_Channel = (
+  channels: Array<ChannelInterface>,
+  channel: ChannelInterface
+) => {
+  const index = channels.findIndex((temp) => temp.id === channel.id);
+  if (index >= 0) {
+    channels[index] = channel;
+  }
+  return [...channels];
 };
