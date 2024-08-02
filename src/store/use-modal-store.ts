@@ -1,17 +1,21 @@
-import {
-  ServerInterface,
-  ServerInterfaceForServerSidebar,
-} from "@/services/interface";
+import { ChannelInterface, ChannelType } from "@/services/interface";
 import { create } from "zustand";
 
 export type ModalType =
   | "createServer"
   | "invite"
   | "editServer"
-  | "manageMember";
+  | "manageMember"
+  | "createChannel"
+  | "leaveServer"
+  | "deleteServer"
+  | "deleteChannel"
+  | "editChannel";
 
 interface ModalData {
-  server?: ServerInterface | ServerInterfaceForServerSidebar;
+  // server?: ServerInterface | ServerInterfaceForServerSidebar;
+  channel?: ChannelInterface;
+  channelType?: ChannelType;
 }
 interface ModelStore {
   type: ModalType | null;

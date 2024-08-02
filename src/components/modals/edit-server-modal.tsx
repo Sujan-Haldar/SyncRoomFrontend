@@ -43,7 +43,13 @@ export const EditServerModal = () => {
   const { id } = useAuthStore();
   const { isOpen, type, onClose } = useModalStore();
   const isModalOPen = isOpen && type === "editServer";
-  const { server, updateImageUrl, updateName } = useServerStore();
+  const {
+    id: currentServerId,
+    name,
+    imageUrl,
+    setImageUrl,
+    setName,
+  } = useServerStore();
   const { updateServer } = useAllServersStore();
   const { push } = useRouter();
   const form = useForm({
@@ -54,29 +60,27 @@ export const EditServerModal = () => {
     },
   });
   useLayoutEffect(() => {
-    if (server) {
-      form.setValue("name", server.name);
-      form.setValue("imageUrl", server.imageUrl);
-    }
-  }, [form, server]);
+    name && form.setValue("name", name);
+    imageUrl && form.setValue("imageUrl", imageUrl);
+  }, [form, imageUrl, name]);
   useLayoutEffect(() => {
-    if (server && !isModalOPen) {
-      form.setValue("name", server.name);
-      form.setValue("imageUrl", server.imageUrl);
+    if (!isModalOPen) {
+      name && form.setValue("name", name);
+      imageUrl && form.setValue("imageUrl", imageUrl);
     }
-  }, [form, isModalOPen, server]);
+  }, [form, imageUrl, isModalOPen, name]);
   const isLoading = form.formState.isSubmitting;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     try {
       updateServerBasicDetailsApi({
-        serverId: server?.id,
+        serverId: currentServerId,
         userId: id,
         ...values,
       }).then((res) => {
         if (res?.data?.data) {
           updateServer(res?.data?.data);
-          updateImageUrl(res?.data?.data?.imageUrl);
-          updateName(res?.data?.data?.name);
+          setImageUrl(res?.data?.data?.imageUrl);
+          setName(res?.data?.data?.name);
           onClose();
         }
       });

@@ -9,8 +9,7 @@ const ServerIdLayout = ({
 }) => {
   return (
     <div className="h-full">
-      <div className=" md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
-        {/*I have  Removed Hidden From this div */}
+      <div className="displayNone md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
         <ServerSidebar serverId={params.serverId} />
       </div>
       <main className="h-full md:pl-60">{children}</main>

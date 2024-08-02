@@ -24,7 +24,6 @@ import * as z from "zod";
 import { FileUpload } from "@/components/file-upload";
 import { useAxiosPrivateApis } from "@/services/api";
 import { useAllServersStore, useAuthStore, useModalStore } from "@/store";
-import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -40,7 +39,6 @@ export const CreateServerModal = () => {
   const { isOpen, type, onClose } = useModalStore();
   const { addServer } = useAllServersStore();
   const isModalOPen = isOpen && type === "createServer";
-  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,7 +60,6 @@ export const CreateServerModal = () => {
         if (res?.data?.data) {
           addServer(res?.data?.data);
         }
-        router.refresh();
         onClose();
       });
     } catch (error) {
