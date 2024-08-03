@@ -19,3 +19,7 @@ export * from "@/components/server/server-member";
 export * from "@/components/server/server-search";
 export * from "@/components/server/server-section";
 export * from "@/components/user-avatar";
+export * from "@/components/chat/chat-header";
+export * from "@/components/mobile-toggle";
+export * from "@/components/navigation/navigation-sidebar";
+export * from "@/components/server/server-sidebar";
