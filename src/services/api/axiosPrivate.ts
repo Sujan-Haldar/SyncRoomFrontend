@@ -107,6 +107,27 @@ export const useAxiosPrivateApis = () => {
       data: data,
     });
   }, []);
+  const getOrCreateConversationApi = useCallback(
+    (data: { memberOne: string; memberTwo: string }) => {
+      return createAxiosPrivateInstance({
+        url: API.auth_urls.conversation,
+        method: "POST",
+        headers: defaultHeader,
+        data: data,
+      });
+    },
+    []
+  );
+  const getMemberByUserAndServerIdApi = useCallback(
+    ({ userId, serverId }: { userId: string; serverId: string }) => {
+      return createAxiosPrivateInstance({
+        url: `${API.auth_urls.member}/${userId}/${serverId}`,
+        method: "GET",
+        headers: defaultHeader,
+      });
+    },
+    []
+  );
   return {
     getServerByProfileId,
     createServer,
@@ -121,5 +142,7 @@ export const useAxiosPrivateApis = () => {
     updateChannelApi,
     leaveServerApi,
     deleteServerApi,
+    getOrCreateConversationApi,
+    getMemberByUserAndServerIdApi,
   };
 };
