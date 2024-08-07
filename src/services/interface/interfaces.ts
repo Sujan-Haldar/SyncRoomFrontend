@@ -35,3 +35,12 @@ export interface ConversationInterface {
   memberOne: MemberInterface;
   memberTwo: MemberInterface;
 }
+export interface MessageInterface {
+  id: string;
+  content: string;
+  fileUrl: string;
+  member: MemberInterface;
+  updated: boolean;
+  deleted: boolean;
+  createdAt: string;
+}

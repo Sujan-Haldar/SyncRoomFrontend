@@ -4,6 +4,10 @@ export const API = {
     dev: process.env.NEXT_PUBLIC_NEXT_APP_API_URL_DEV,
     prod: process.env.NEXT_PUBLIC_NEXT_APP_API_URL_PROD,
   },
+  socketURL: {
+    dev: process.env.NEXT_PUBLIC_NEXT_APP_SOCKET_URL_DEV,
+    prod: process.env.NEXT_PUBLIC_NEXT_APP_SOCKET_URL_PROD,
+  },
   noAuthUrls: {},
   auth_urls: {
     accessToken: "/api/v1/access-token",
@@ -17,5 +21,7 @@ export const API = {
     channel: "/api/v1/channel",
     leaveServer: "/api/v1/servers/leave",
     conversation: "/api/v1/conversation",
+    message: "/api/v1/message",
+    directMessage: "/api/v1/direct-message",
   },
 };

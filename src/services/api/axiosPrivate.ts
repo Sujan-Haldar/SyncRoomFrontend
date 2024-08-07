@@ -128,6 +128,52 @@ export const useAxiosPrivateApis = () => {
     },
     []
   );
+  const sendNewMessageForChannelApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.message,
+      method: "POST",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
+  const getMessagesForChannelApi = useCallback((query: string) => {
+    return createAxiosPrivateInstance({
+      url: `${API.auth_urls.message}?${query}`,
+      method: "GET",
+      headers: defaultHeader,
+    });
+  }, []);
+  const updateOrDeleteMessageForChannelApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.message,
+      method: "PATCH",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
+  const sendNewMessageForConversationApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.directMessage,
+      method: "POST",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
+  const getMessagesForConversationApi = useCallback((query: string) => {
+    return createAxiosPrivateInstance({
+      url: `${API.auth_urls.directMessage}?${query}`,
+      method: "GET",
+      headers: defaultHeader,
+    });
+  }, []);
+  const updateOrDeleteMessageForConversationApi = useCallback((data: any) => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.directMessage,
+      method: "PATCH",
+      headers: defaultHeader,
+      data: data,
+    });
+  }, []);
   return {
     getServerByProfileId,
     createServer,
@@ -144,5 +190,11 @@ export const useAxiosPrivateApis = () => {
     deleteServerApi,
     getOrCreateConversationApi,
     getMemberByUserAndServerIdApi,
+    sendNewMessageForChannelApi,
+    getMessagesForChannelApi,
+    updateOrDeleteMessageForChannelApi,
+    sendNewMessageForConversationApi,
+    getMessagesForConversationApi,
+    updateOrDeleteMessageForConversationApi,
   };
 };

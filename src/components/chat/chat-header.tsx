@@ -1,4 +1,4 @@
-import { MobileToggle, UserAvater } from "@/components";
+import { MobileToggle, SocketIndicator, UserAvater } from "@/components";
 import { Hash } from "lucide-react";
 import React from "react";
 interface ChatHeaderProps {
@@ -23,6 +23,10 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({
         <UserAvater src={imageUrl} className="h-8 w-8 md:h-8 md:w-8 mr-2" />
       )}
       <p className="font-semibold text-black dark:text-white">{name && name}</p>
+
+      <div className="ml-auto flex items-center">
+        <SocketIndicator />
+      </div>
     </div>
   );
 };
