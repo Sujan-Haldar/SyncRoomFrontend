@@ -1,4 +1,9 @@
-import { ModalProvider, ThemeProvider } from "@/components";
+import {
+  ModalProvider,
+  QueryProvider,
+  SocketProvider,
+  ThemeProvider,
+} from "@/components";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
@@ -25,8 +30,10 @@ export default function RootLayout({
           enableSystem={false}
           storageKey="discord-theme"
         >
-          <ModalProvider />
-          {children}
+          <SocketProvider>
+            <ModalProvider />
+            <QueryProvider>{children}</QueryProvider>
+          </SocketProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -1,10 +1,10 @@
 "use client";
 
-import { ChatHeader } from "@/components";
+import { ChatHeader, ChatInput, ChatMessages } from "@/components";
 import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
 import { ConversationInterface, MemberInterface } from "@/services/interface";
-import { useAuthStore } from "@/store";
+import { useAuthStore, useServerStore } from "@/store";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useState } from "react";
 
@@ -16,10 +16,18 @@ interface MemberIdPageProps {
 }
 const MemberIdPage: React.FC<MemberIdPageProps> = ({ params }) => {
   const { id: userId } = useAuthStore();
-  const { getMemberByUserAndServerIdApi, getOrCreateConversationApi } =
-    useAxiosPrivateApis();
+  const { members } = useServerStore();
+  const {
+    getMemberByUserAndServerIdApi,
+    getOrCreateConversationApi,
+    sendNewMessageForConversationApi,
+    updateOrDeleteMessageForConversationApi,
+    getMessagesForConversationApi,
+  } = useAxiosPrivateApis();
   const router = useRouter();
+  const [currentMember, setCurrentMember] = useState<MemberInterface>();
   const [otherMember, setOtherMember] = useState<MemberInterface>();
+  const [conversation, setConversation] = useState<ConversationInterface>();
   useLayoutEffect(() => {
     userId &&
       getMemberByUserAndServerIdApi({ userId, serverId: params.serverId })
@@ -32,6 +40,7 @@ const MemberIdPage: React.FC<MemberIdPageProps> = ({ params }) => {
             })
               .then((res) => {
                 const conversation: ConversationInterface = res?.data?.data;
+                setConversation(conversation);
                 setOtherMember(
                   conversation.memberOne.id === params.memberId
                     ? conversation.memberOne
@@ -48,6 +57,12 @@ const MemberIdPage: React.FC<MemberIdPageProps> = ({ params }) => {
           }
         });
   }, []);
+  useLayoutEffect(() => {
+    setCurrentMember(
+      members?.find((temp: MemberInterface) => temp.user.id === userId)
+    );
+  }, [members, userId]);
+
   return (
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">
       <ChatHeader
@@ -55,6 +70,31 @@ const MemberIdPage: React.FC<MemberIdPageProps> = ({ params }) => {
         serverId={params.serverId}
         name={otherMember?.user.name}
         imageUrl={otherMember?.user?.imageUrl}
+      />
+      <ChatMessages
+        name={otherMember?.user.name}
+        type="conversation"
+        chatId={conversation?.id as string}
+        data={{
+          userId: userId as string,
+          serverId: params.serverId,
+          conversationId: conversation?.id,
+        }}
+        currentMember={currentMember}
+        getMessages={getMessagesForConversationApi}
+        handleSubmitForUpdateAndDeleteMessage={
+          updateOrDeleteMessageForConversationApi
+        }
+      />
+      <ChatInput
+        data={{
+          userId: userId as string,
+          serverId: params.serverId,
+          conversationId: conversation?.id,
+        }}
+        name={otherMember?.user.name}
+        type="conversation"
+        onSubmitHandler={sendNewMessageForConversationApi}
       />
     </div>
   );
