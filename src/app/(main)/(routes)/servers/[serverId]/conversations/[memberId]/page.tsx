@@ -1,6 +1,5 @@
 "use client";
-
-import { ChatHeader, ChatInput, ChatMessages } from "@/components";
+import { ChatHeader, ChatInput, ChatMessages, MediaRoom } from "@/components";
 import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
 import { ConversationInterface, MemberInterface } from "@/services/interface";
@@ -13,8 +12,14 @@ interface MemberIdPageProps {
     serverId: string;
     memberId: string;
   };
+  searchParams: {
+    video?: boolean;
+  };
 }
-const MemberIdPage: React.FC<MemberIdPageProps> = ({ params }) => {
+const MemberIdPage: React.FC<MemberIdPageProps> = ({
+  params,
+  searchParams,
+}) => {
   const { id: userId } = useAuthStore();
   const { members } = useServerStore();
   const {
@@ -71,31 +76,42 @@ const MemberIdPage: React.FC<MemberIdPageProps> = ({ params }) => {
         name={otherMember?.user.name}
         imageUrl={otherMember?.user?.imageUrl}
       />
-      <ChatMessages
-        name={otherMember?.user.name}
-        type="conversation"
-        chatId={conversation?.id as string}
-        data={{
-          userId: userId as string,
-          serverId: params.serverId,
-          conversationId: conversation?.id,
-        }}
-        currentMember={currentMember}
-        getMessages={getMessagesForConversationApi}
-        handleSubmitForUpdateAndDeleteMessage={
-          updateOrDeleteMessageForConversationApi
-        }
-      />
-      <ChatInput
-        data={{
-          userId: userId as string,
-          serverId: params.serverId,
-          conversationId: conversation?.id,
-        }}
-        name={otherMember?.user.name}
-        type="conversation"
-        onSubmitHandler={sendNewMessageForConversationApi}
-      />
+      {searchParams.video && (
+        <MediaRoom
+          chatId={conversation?.id as string}
+          audio={true}
+          video={true}
+        />
+      )}
+      {!searchParams.video && (
+        <>
+          <ChatMessages
+            name={otherMember?.user.name}
+            type="conversation"
+            chatId={conversation?.id as string}
+            data={{
+              userId: userId as string,
+              serverId: params.serverId,
+              conversationId: conversation?.id,
+            }}
+            currentMember={currentMember}
+            getMessages={getMessagesForConversationApi}
+            handleSubmitForUpdateAndDeleteMessage={
+              updateOrDeleteMessageForConversationApi
+            }
+          />
+          <ChatInput
+            data={{
+              userId: userId as string,
+              serverId: params.serverId,
+              conversationId: conversation?.id,
+            }}
+            name={otherMember?.user.name}
+            type="conversation"
+            onSubmitHandler={sendNewMessageForConversationApi}
+          />
+        </>
+      )}
     </div>
   );
 };

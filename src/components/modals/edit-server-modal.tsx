@@ -71,22 +71,20 @@ export const EditServerModal = () => {
   }, [form, imageUrl, isModalOPen, name]);
   const isLoading = form.formState.isSubmitting;
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    try {
-      updateServerBasicDetailsApi({
-        serverId: currentServerId,
-        userId: id,
-        ...values,
-      }).then((res) => {
+    updateServerBasicDetailsApi({
+      serverId: currentServerId,
+      userId: id,
+      ...values,
+    })
+      .then((res) => {
         if (res?.data?.data) {
           updateServer(res?.data?.data);
           setImageUrl(res?.data?.data?.imageUrl);
           setName(res?.data?.data?.name);
           onClose();
         }
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      })
+      .catch((err) => {});
   };
   const handleClose: any = () => {
     onClose();
