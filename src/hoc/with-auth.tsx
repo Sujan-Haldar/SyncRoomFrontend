@@ -24,13 +24,13 @@ export const withAuth = (Component: any) => {
               setUserId(res?.data?.data?.id);
               setUser(res?.data?.data?.user);
             } else {
-              return router.push("/login");
+              return router.push("/sign-in");
             }
           })
           .catch((error) => {
             if (error?.response?.status === 401) {
               removeAuth();
-              return router.push("/login");
+              return router.push("/sign-in");
             }
           });
       }

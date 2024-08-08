@@ -17,7 +17,7 @@ const Oauth2Redirect = () => {
       })
       .catch((err) => {
         setIsAuthenticated(false);
-        router.push("/login");
+        router.push("/sign-in");
       });
   }, [router, setIsAuthenticated, setUserId]);
 
