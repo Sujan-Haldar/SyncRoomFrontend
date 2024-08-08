@@ -1,9 +1,13 @@
 "use client";
 
-import { ChatHeader, ChatInput, ChatMessages } from "@/components";
+import { ChatHeader, ChatInput, ChatMessages, MediaRoom } from "@/components";
 import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
-import { ChannelInterface, MemberInterface } from "@/services/interface";
+import {
+  ChannelInterface,
+  ChannelType,
+  MemberInterface,
+} from "@/services/interface";
 import { useAuthStore, useServerStore } from "@/store";
 import { useLayoutEffect, useState } from "react";
 
@@ -51,31 +55,41 @@ const ChannelIdPage: React.FC<ChannelIdPageProps> = ({ params }) => {
         type="channel"
         name={channel?.name}
       />
-      <ChatMessages
-        name={channel?.name}
-        type="channel"
-        chatId={channel?.id as string}
-        data={{
-          userId: id as string,
-          serverId: params.serverId,
-          channelId: params.channelId,
-        }}
-        currentMember={currentMember}
-        getMessages={getMessagesForChannelApi}
-        handleSubmitForUpdateAndDeleteMessage={
-          updateOrDeleteMessageForChannelApi
-        }
-      />
-      <ChatInput
-        data={{
-          userId: id as string,
-          serverId: params.serverId,
-          channelId: params.channelId,
-        }}
-        name={channel?.name}
-        type="channel"
-        onSubmitHandler={sendNewMessageForChannelApi}
-      />
+      {channel?.type === ChannelType.TEXT && (
+        <>
+          <ChatMessages
+            name={channel?.name}
+            type="channel"
+            chatId={channel?.id as string}
+            data={{
+              userId: id as string,
+              serverId: params.serverId,
+              channelId: params.channelId,
+            }}
+            currentMember={currentMember}
+            getMessages={getMessagesForChannelApi}
+            handleSubmitForUpdateAndDeleteMessage={
+              updateOrDeleteMessageForChannelApi
+            }
+          />
+          <ChatInput
+            data={{
+              userId: id as string,
+              serverId: params.serverId,
+              channelId: params.channelId,
+            }}
+            name={channel?.name}
+            type="channel"
+            onSubmitHandler={sendNewMessageForChannelApi}
+          />
+        </>
+      )}
+      {channel?.type === ChannelType.AUDIO && (
+        <MediaRoom chatId={channel.id} video={false} audio={true} />
+      )}
+      {channel?.type === ChannelType.VIDEO && (
+        <MediaRoom chatId={channel.id} video={true} audio={true} />
+      )}
     </div>
   );
 };
