@@ -10,7 +10,7 @@ const ServerIdLayout = ({
   return (
     <div className="h-full">
       <div className="displayNone md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
-        <ServerSidebar serverId={params.serverId} />
+        <ServerSidebar />
       </div>
       <main className="h-full md:pl-60">{children}</main>
     </div>

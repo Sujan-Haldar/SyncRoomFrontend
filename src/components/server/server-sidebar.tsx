@@ -18,9 +18,6 @@ import { useAuthStore, useServerStore } from "@/store";
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { useLayoutEffect, useState } from "react";
 import { Separator } from "../ui/separator";
-interface ServerSidebarProps {
-  serverId: string;
-}
 const channelIconMap = {
   [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4" />,
   [ChannelType.AUDIO]: <Mic className="mr-2 h-4 w-4" />,
@@ -34,9 +31,8 @@ const roleIconMap = {
   [MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />,
 };
 
-const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
+const MyServerSidebar = () => {
   const { id } = useAuthStore();
-  const { getServerByUserIdandServerIdApi } = useAxiosPrivateApis();
   const {
     id: currentServerId,
     channels,
@@ -200,5 +196,4 @@ const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
   );
 };
 
-// export const ServerSidebar = withAuth(MyServerSidebar);
 export const ServerSidebar = MyServerSidebar;
