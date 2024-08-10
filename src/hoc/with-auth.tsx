@@ -2,8 +2,9 @@
 
 import { setIsAuthenticatedApi } from "@/services/api";
 import { useAuthStore } from "@/store";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export const withAuth = (Component: any) => {
   return function WithAuth(props: any) {
@@ -15,7 +16,8 @@ export const withAuth = (Component: any) => {
       setUser,
     } = useAuthStore();
     const router = useRouter();
-    useEffect(() => {
+
+    useLayoutEffect(() => {
       if (!isAuthenticated) {
         setIsAuthenticatedApi()
           .then((res) => {
@@ -42,9 +44,15 @@ export const withAuth = (Component: any) => {
       setUser,
       setUserId,
     ]);
-    if (!isAuthenticated) {
-      return null;
-    }
+    if (!isAuthenticated)
+      return (
+        <div className="flex justify-center items-center h-full">
+          <div className="flex flex-col items-center">
+            <Loader2 className="w-10 h-10 animate-spin" />
+            <p className="font-semibold text-lg">Loading...</p>
+          </div>
+        </div>
+      );
     return <Component {...props} />;
   };
 };

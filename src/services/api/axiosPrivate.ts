@@ -174,6 +174,13 @@ export const useAxiosPrivateApis = () => {
       data: data,
     });
   }, []);
+  const signOutApi = useCallback(() => {
+    return createAxiosPrivateInstance({
+      url: API.auth_urls.signOut,
+      method: "GET",
+      headers: defaultHeader,
+    });
+  }, []);
   return {
     getServerByProfileId,
     createServer,
@@ -196,5 +203,6 @@ export const useAxiosPrivateApis = () => {
     sendNewMessageForConversationApi,
     getMessagesForConversationApi,
     updateOrDeleteMessageForConversationApi,
+    signOutApi,
   };
 };

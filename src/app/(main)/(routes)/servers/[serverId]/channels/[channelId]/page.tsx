@@ -1,7 +1,6 @@
 "use client";
 
 import { ChatHeader, ChatInput, ChatMessages, MediaRoom } from "@/components";
-import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
 import {
   ChannelInterface,
@@ -94,4 +93,5 @@ const ChannelIdPage: React.FC<ChannelIdPageProps> = ({ params }) => {
   );
 };
 
-export default withAuth(ChannelIdPage);
+// export default withAuth(ChannelIdPage);
+export default ChannelIdPage;

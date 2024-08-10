@@ -31,7 +31,11 @@ export const ServerMember: React.FC<ServerMemberProps> = ({ member }) => {
         params?.memberId === member.id && "bg-zinc-700/20 dark:bg-zinc-700"
       )}
     >
-      <UserAvater src={member?.user?.imageUrl} className="h-8 w-8 md:w-8" />
+      <UserAvater
+        src={member?.user?.imageUrl}
+        name={member?.user?.name}
+        className="h-8 w-8 md:w-8 md:h-8"
+      />
       <p
         className={cn(
           "font-semibold text-sm text-zinc-500 group-hover:text-zinc-600 dark:text-zinc-400 dark:group-hover:text-zinc-300 transition",

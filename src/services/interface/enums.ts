@@ -8,3 +8,9 @@ export enum MemberRole {
   MODERATOR = "MODERATOR",
   GUEST = "GUEST",
 }
+
+export enum OtpType {
+  SIGNIN = "SIGNIN",
+  SIGNUP = "SIGNUP",
+  FORGETPASSWORD = "FORGETPASSWORD",
+}
