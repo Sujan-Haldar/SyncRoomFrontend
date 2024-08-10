@@ -4,6 +4,7 @@ import {
   SocketProvider,
   ThemeProvider,
 } from "@/components";
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
@@ -32,6 +33,7 @@ export default function RootLayout({
         >
           <SocketProvider>
             <ModalProvider />
+            <Toaster />
             <QueryProvider>{children}</QueryProvider>
           </SocketProvider>
         </ThemeProvider>

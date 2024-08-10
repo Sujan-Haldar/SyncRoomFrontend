@@ -29,7 +29,13 @@ const ServerIDPage = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [
+    getServerByUserIdandServerIdApi,
+    params?.serverId,
+    push,
+    setServer,
+    userId,
+  ]);
   return null;
 };
 

@@ -2,7 +2,6 @@
 
 import { ChatItem, ChatWelcome } from "@/components";
 import { useChatQuery, useChatScroll, useChatSocket } from "@/hook";
-import { useAxiosPrivateApis } from "@/services/api";
 import { MemberInterface, MessageInterface } from "@/services/interface";
 import { Loader2, ServerCrash } from "lucide-react";
 import { ElementRef, Fragment, useRef } from "react";

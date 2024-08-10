@@ -7,7 +7,6 @@ import {
   ServerSection,
 } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
 import {
   ChannelInterface,
@@ -201,4 +200,5 @@ const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
   );
 };
 
-export const ServerSidebar = withAuth(MyServerSidebar);
+// export const ServerSidebar = withAuth(MyServerSidebar);
+export const ServerSidebar = MyServerSidebar;

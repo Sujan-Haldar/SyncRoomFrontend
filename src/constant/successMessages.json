@@ -1,0 +1,26 @@
+{
+  "S-10001": {
+    "message": "Everything is ok.."
+  },
+  "S-10002": {
+    "message": "Invite Code updated sucessfully."
+  },
+  "S-10003": {
+    "message": "Server is created sucessfully!"
+  },
+  "S-10004": {
+    "message": "Server found sucessfully!"
+  },
+  "S-10005": {
+    "message": "Congratulations, Your account has been successfully created."
+  },
+  "S-10006": {
+    "message": "Please wait for processing."
+  },
+  "S-10007": {
+    "message": "OTP sent sucessfully!"
+  },
+  "S-10008": {
+    "message": "Your password is updated sucessfully!"
+  }
+}

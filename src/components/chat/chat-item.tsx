@@ -106,7 +106,7 @@ export const ChatItem: React.FC<ChatItemProps> = ({
           className="cursor-pointer hover:drop-shadow-md transition'"
           onClick={onMemberClick}
         >
-          <UserAvater src={member?.user?.imageUrl} />
+          <UserAvater src={member?.user?.imageUrl} name={member?.user?.name} />
         </div>
         <div className="flex flex-col w-full">
           <div className="flex items-center gap-x-2">

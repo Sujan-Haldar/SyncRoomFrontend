@@ -116,4 +116,5 @@ const MemberIdPage: React.FC<MemberIdPageProps> = ({
   );
 };
 
-export default withAuth(MemberIdPage);
+// export default withAuth(MemberIdPage);
+export default MemberIdPage;
