@@ -7,7 +7,6 @@ import {
   ServerSection,
 } from "@/components";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
 import {
   ChannelInterface,
@@ -42,8 +41,6 @@ const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
     id: currentServerId,
     channels,
     members: currentServerMembers,
-    setServer,
-    removeServerInfo,
   } = useServerStore();
   const [textChannels, setTextChannels] = useState<Array<ChannelInterface>>([]);
   const [audioChannels, setAudioChannels] = useState<Array<ChannelInterface>>(
@@ -54,18 +51,6 @@ const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
   );
   const [members, setMembers] = useState<Array<MemberInterface>>([]);
   const [role, setRole] = useState<string>();
-  useLayoutEffect(() => {
-    getServerByUserIdandServerIdApi({
-      userId: id,
-      serverId,
-    })
-      .then((res) => {
-        if (res?.data?.data) setServer(res?.data?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [id, serverId]);
   useLayoutEffect(() => {
     if (channels) {
       setTextChannels(
@@ -215,4 +200,5 @@ const MyServerSidebar: React.FC<ServerSidebarProps> = ({ serverId }) => {
   );
 };
 
-export const ServerSidebar = withAuth(MyServerSidebar);
+// export const ServerSidebar = withAuth(MyServerSidebar);
+export const ServerSidebar = MyServerSidebar;

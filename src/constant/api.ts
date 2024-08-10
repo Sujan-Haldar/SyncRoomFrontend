@@ -4,10 +4,15 @@ export const API = {
     dev: process.env.NEXT_PUBLIC_NEXT_APP_API_URL_DEV,
     prod: process.env.NEXT_PUBLIC_NEXT_APP_API_URL_PROD,
   },
-  noAuthUrls: {},
+  noAuthUrls: {
+    accessToken: "/api/v1/auth/access-token",
+    isAuthenticated: "/api/v1/auth/is-login",
+    signUp: "/api/v1/auth/sign-up",
+    signIn: "/api/v1/auth/sign-in",
+    forgetPassword: "/api/v1/auth/forget-password",
+    otp: "/api/v1/auth/otp",
+  },
   auth_urls: {
-    accessToken: "/api/v1/access-token",
-    isAuthenticated: "/api/v1/is-login",
     getServerByProfileId: "/api/v1/servers/member",
     getMultipleServerByUserId: "/api/v1/servers/user",
     getServerByUserIdandServerId: "/api/v1/servers/server-and-userid",
@@ -16,5 +21,11 @@ export const API = {
     member: "/api/v1/member",
     channel: "/api/v1/channel",
     leaveServer: "/api/v1/servers/leave",
+    conversation: "/api/v1/conversation",
+    message: "/api/v1/message",
+    directMessage: "/api/v1/direct-message",
+    signOut: "/api/v1/auth/sign-out",
   },
 };
+
+export const APIURL = API.baseURL[API.currentEnv as keyof typeof API.baseURL];

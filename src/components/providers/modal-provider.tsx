@@ -3,12 +3,15 @@ import {
   CreateChannelModal,
   CreateServerModal,
   DeleteChannelModal,
+  DeleteMessageModal,
   DeleteServerModal,
   EditChannelModal,
   EditServerModal,
+  ForgetPasswordModal,
   InviteModal,
   LeaveServerModal,
   ManageMemberModal,
+  MessageFileModel,
 } from "@/components";
 import { useEffect, useState } from "react";
 
@@ -31,6 +34,9 @@ export const ModalProvider = () => {
       <DeleteServerModal />
       <DeleteChannelModal />
       <EditChannelModal />
+      <MessageFileModel />
+      <DeleteMessageModal />
+      <ForgetPasswordModal />
     </>
   );
 };

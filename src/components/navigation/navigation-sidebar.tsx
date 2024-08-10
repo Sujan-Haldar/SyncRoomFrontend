@@ -1,17 +1,22 @@
 "use client";
-import { ModeToggle } from "@/components";
+import { ActionTooltip, ModeToggle } from "@/components";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { withAuth } from "@/hoc/with-auth";
-import { useAxiosPrivateApis } from "@/services/api";
+import { signOutApi, useAxiosPrivateApis } from "@/services/api";
 import { ServerInterface } from "@/services/interface";
 import { useAllServersStore, useAuthStore } from "@/store";
+import { LogOut, Settings } from "lucide-react";
 import { useLayoutEffect } from "react";
 import { NavigationAction } from "./navigation-action";
 import { NavigationItem } from "./navigation-item";
-
 export const MyNavigationSidebar = () => {
-  const { id } = useAuthStore();
+  const { id, removeAuth } = useAuthStore();
   const { getMultipleServerByUserId } = useAxiosPrivateApis();
   const { servers, setServers } = useAllServersStore();
   useLayoutEffect(() => {
@@ -25,8 +30,14 @@ export const MyNavigationSidebar = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [id]);
-
+  }, [getMultipleServerByUserId, id, setServers]);
+  const onClickSignOut = () => {
+    signOutApi()
+      .then((res) => {
+        removeAuth();
+      })
+      .catch((err) => {});
+  };
   return (
     <div className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] bg-[#E3E5E8] py-3">
       <NavigationAction />
@@ -43,11 +54,26 @@ export const MyNavigationSidebar = () => {
           </div>
         ))}
       </ScrollArea>
-      <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
+      <div className="pb-3 mt-auto flex items-center flex-col gap-y-6">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <ActionTooltip lebel="Settings" side="top">
+              <Settings className="h-6 w-6 text-zinc-700 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-300 transition" />
+            </ActionTooltip>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="right">
+            <DropdownMenuItem onClick={onClickSignOut}>
+              <LogOut className="h-4 w-4 mr-2" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
         <ModeToggle />
       </div>
     </div>
   );
 };
 
-export const NavigationSidebar = withAuth(MyNavigationSidebar);
+// export const NavigationSidebar = withAuth(MyNavigationSidebar);
+export const NavigationSidebar = MyNavigationSidebar;

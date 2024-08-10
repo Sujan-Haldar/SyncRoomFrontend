@@ -3,6 +3,7 @@
 import { withAuth } from "@/hoc/with-auth";
 import { useAxiosPrivateApis } from "@/services/api";
 import { useAuthStore } from "@/store";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect } from "react";
 
@@ -32,6 +33,13 @@ const InvitePage: React.FC<InvitePageProps> = ({ params }) => {
         });
   }, [id, params.inviteCode, push, serverInviteApi]);
 
-  return null;
+  return (
+    <div className="flex justify-center items-center h-full">
+      <div className="flex flex-col items-center">
+        <Loader2 className="w-10 h-10 animate-spin" />
+        <p className="font-semibold text-lg">Loading...</p>
+      </div>
+    </div>
+  );
 };
 export default withAuth(InvitePage);

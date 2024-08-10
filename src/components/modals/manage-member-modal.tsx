@@ -104,7 +104,10 @@ export const ManageMemberModal = () => {
           {members &&
             members.map((member) => (
               <div key={member.id} className="flex items-center gap-x-2 mb-6">
-                <UserAvater src={member.user.imageUrl}></UserAvater>
+                <UserAvater
+                  src={member.user.imageUrl}
+                  name={member?.user?.name}
+                ></UserAvater>
                 <div className="flex flex-col gap-y-1">
                   <div className="text-xs font-semibold flex items-center gap-x-1">
                     {member.user.name}

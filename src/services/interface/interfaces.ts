@@ -29,3 +29,18 @@ export interface ServerInterfaceForServerSidebar extends ServerInterface {
   members: Array<MemberInterface>;
   channels: Array<ChannelInterface>;
 }
+
+export interface ConversationInterface {
+  id: string;
+  memberOne: MemberInterface;
+  memberTwo: MemberInterface;
+}
+export interface MessageInterface {
+  id: string;
+  content: string;
+  fileUrl: string;
+  member: MemberInterface;
+  updated: boolean;
+  deleted: boolean;
+  createdAt: string;
+}

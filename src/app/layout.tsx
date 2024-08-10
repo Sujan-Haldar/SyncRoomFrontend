@@ -1,4 +1,10 @@
-import { ModalProvider, ThemeProvider } from "@/components";
+import {
+  ModalProvider,
+  QueryProvider,
+  SocketProvider,
+  ThemeProvider,
+} from "@/components";
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
@@ -25,8 +31,11 @@ export default function RootLayout({
           enableSystem={false}
           storageKey="discord-theme"
         >
-          <ModalProvider />
-          {children}
+          <SocketProvider>
+            <ModalProvider />
+            <Toaster />
+            <QueryProvider>{children}</QueryProvider>
+          </SocketProvider>
         </ThemeProvider>
       </body>
     </html>

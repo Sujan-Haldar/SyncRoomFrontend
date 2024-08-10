@@ -1,0 +1,41 @@
+{
+  "E-10001": {
+    "message": "Oops! Something went wrong. Please try later…"
+  },
+  "E-10002": {
+    "message": "You are not a registered user."
+  },
+  "E-10003": {
+    "message": "Server not found."
+  },
+  "E-10004": {
+    "message": "Failed to create new server."
+  },
+  "E-10005": {
+    "message": "Please enter your email."
+  },
+  "E-10006": {
+    "message": "Please enter your name."
+  },
+  "E-10007": {
+    "message": "Please enter your password."
+  },
+  "E-10008": {
+    "message": "Please login with your existing credential."
+  },
+  "E-10009": {
+    "message": "Invalid email or password."
+  },
+  "E-10010": {
+    "message": "Please enter OTP."
+  },
+  "E-10011": {
+    "message": "OTP is not valid"
+  },
+  "E-10012": {
+    "message": "Facing issue to send email."
+  },
+  "E-10013": {
+    "message": "Please sign in again."
+  }
+}
